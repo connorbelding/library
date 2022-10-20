@@ -4,7 +4,13 @@ const modalContainer = document.getElementById("modal");
 const form = document.getElementById("book-form");
 
 const myLibrary = [
-  { name: "Big Book", author: "John Doe", pages: 132, read: false },
+  {
+    name: "Big Book",
+    author: "John Doe",
+    pages: 132,
+    read: false,
+    id: generateId(),
+  },
 ];
 
 function Book({ name, author, pages, read }) {
@@ -24,6 +30,7 @@ function updateBooksDisplay() {
   myLibrary.forEach((book) => {
     const div = document.createElement("div");
     div.classList.add("book");
+    div.setAttribute("data-id", book.id);
     div.textContent = `${book.name} / ${book.author} / ${book.pages} pages / ${
       book.read ? "read" : "unread"
     }`;
@@ -73,5 +80,9 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   handleFormSubmit();
 });
+
+function generateId() {
+  return crypto.randomUUID();
+}
 
 updateBooksDisplay();
