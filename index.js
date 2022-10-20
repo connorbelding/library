@@ -1,5 +1,6 @@
 const addBookBtn = document.getElementById("add-book-btn");
 const booksContainer = document.getElementById("books");
+const modalContainer = document.getElementById("modal");
 
 const myLibrary = [];
 
@@ -32,3 +33,9 @@ function removeAllChildren(node) {
     node.removeChild(node.lastChild);
   }
 }
+
+function toggleForm() {
+  modalContainer.classList.toggle("hide");
+}
+
+addBookBtn.addEventListener("click", toggleForm);
