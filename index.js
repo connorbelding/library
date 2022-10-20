@@ -3,7 +3,7 @@ const booksContainer = document.getElementById("books");
 const modalContainer = document.getElementById("modal");
 const form = document.getElementById("book-form");
 
-const myLibrary = [];
+let myLibrary = [];
 
 function Book({ name, author, pages, read }) {
   this.name = name;
@@ -27,6 +27,21 @@ function updateBooksDisplay() {
     div.textContent = `${book.name} / ${book.author} / ${book.pages} pages / ${
       book.read ? "read" : "unread"
     }`;
+
+    const toggleReadBtn = document.createElement("button");
+    toggleReadBtn.textContent = book.read ? "Mark unread" : "Mark read";
+    toggleReadBtn.addEventListener("click", () => {
+      myLibrary = myLibrary.map((libraryBook) => {
+        if (libraryBook.id === book.id)
+          return { ...libraryBook, read: !libraryBook.read };
+        return libraryBook;
+      });
+      removeAllChildren(booksContainer);
+      updateBooksDisplay();
+    });
+
+    div.appendChild(toggleReadBtn);
+
     booksContainer.appendChild(div);
   });
 }
