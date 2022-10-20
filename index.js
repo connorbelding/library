@@ -3,21 +3,14 @@ const booksContainer = document.getElementById("books");
 const modalContainer = document.getElementById("modal");
 const form = document.getElementById("book-form");
 
-const myLibrary = [
-  {
-    name: "Big Book",
-    author: "John Doe",
-    pages: 132,
-    read: false,
-    id: generateId(),
-  },
-];
+const myLibrary = [];
 
 function Book({ name, author, pages, read }) {
   this.name = name;
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.id = generateId();
 }
 
 function addBookToLibrary(book) {
