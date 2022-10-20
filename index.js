@@ -3,7 +3,37 @@ const booksContainer = document.getElementById("books");
 const modalContainer = document.getElementById("modal");
 const form = document.getElementById("book-form");
 
-let myLibrary = [];
+//let myLibrary = [];
+let myLibrary = [
+  {
+    name: "Book 1",
+    author: "Author 1",
+    pages: 321,
+    read: false,
+    id: generateId(),
+  },
+  {
+    name: "Book 2",
+    author: "Author 2",
+    pages: 155,
+    read: true,
+    id: generateId(),
+  },
+  {
+    name: "Book 3",
+    author: "Author 3",
+    pages: 72,
+    read: true,
+    id: generateId(),
+  },
+  {
+    name: "Book 4",
+    author: "Author 4",
+    pages: 1026,
+    read: false,
+    id: generateId(),
+  },
+];
 
 function Book({ name, author, pages, read }) {
   this.name = name;
