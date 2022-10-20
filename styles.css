@@ -30,3 +30,16 @@
   background: #fff;
   padding: 1.5rem;
 }
+
+#books {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book {
+  flex: 0 0 300px;
+  height: 300px;
+  background: #cac;
+  display: flex;
+  flex-direction: column;
+}
