@@ -54,9 +54,8 @@ function updateBooksDisplay() {
     const div = document.createElement("div");
     div.classList.add("book");
     div.setAttribute("data-id", book.id);
-    div.textContent = `${book.name} / ${book.author} / ${book.pages} pages / ${
-      book.read ? "read" : "unread"
-    }`;
+    div.textContent = `${book.name} / ${book.author} / ${book.pages} pages / ${book.read ? "read" : "unread"
+      }`;
 
     const toggleReadBtn = document.createElement("button");
     toggleReadBtn.textContent = book.read ? "Mark unread" : "Mark read";
@@ -70,7 +69,17 @@ function updateBooksDisplay() {
       updateBooksDisplay();
     });
 
+    const deleteBookBtn = document.createElement('button')
+    deleteBookBtn.textContent = 'Delete book'
+    deleteBookBtn.addEventListener('click', () => {
+      myLibrary = myLibrary.filter(libraryBook => libraryBook.id !== book.id)
+      removeAllChildren(booksContainer);
+      updateBooksDisplay();
+    })
+
+
     div.appendChild(toggleReadBtn);
+    div.appendChild(deleteBookBtn);
 
     booksContainer.appendChild(div);
   });
@@ -98,8 +107,6 @@ function handleFormSubmit() {
   });
   const newBook = new Book(obj);
   addBookToLibrary(newBook);
-  resetForm();
-  toggleForm();
 }
 
 function resetForm() {
@@ -117,6 +124,8 @@ addBookBtn.addEventListener("click", toggleForm);
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   handleFormSubmit();
+  resetForm();
+  toggleForm();
 });
 
 function generateId() {
