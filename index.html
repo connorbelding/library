@@ -8,20 +8,47 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <button id="add-book-btn">Open book form</button>
-    <div id="books"></div>
-    <div id="modal" class="hide">
-      <form id="book-form">
-        <label for="name">name:</label>
-        <input type="text" name="name" id="name" />
-        <label for="author">author:</label>
-        <input type="text" name="author" id="author" />
-        <label for="pages">pages:</label>
-        <input type="number" name="pages" id="pages" />
-        <label for="read">read:</label>
-        <input type="checkbox" name="read" id="read" />
+    <div class="sidebar">
+      <form>
+        <div class="inputs-container">
+          <div class="input-container">
+            <label for="name">Book name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="input-container">
+            <label for="author">Book author</label>
+            <input type="text" name="author" id="author" />
+          </div>
+          <div class="input-container">
+            <label for="pages">Page amount</label>
+            <input type="number" name="pages" id="pages" />
+          </div>
+          <div class="input-container checkbox">
+            <label for="read">Have you read this book?</label>
+            <input type="checkbox" name="read" id="read" />
+            <span class="custom-checkbox" tabindex="0"></span>
+          </div>
+        </div>
         <button type="submit">Add book</button>
       </form>
+    </div>
+    <div class="main">
+      <div class="main-flex">
+        <div class="book">
+          <div class="book-title">Book 1</div>
+          <div class="book-author">by Don Marl</div>
+          <div class="book-pages">521 pages</div>
+          <div class="book-read">You've read this book.</div>
+          <div class="book-buttons">
+            <button class="book-read-button">
+              <img src="./eye.svg" alt="eye icon" />
+            </button>
+            <button class="book-delete-button">
+              <img class="x-icon" src="./x.svg" alt="x icon" />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="./index.js"></script>
   </body>
