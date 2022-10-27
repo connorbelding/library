@@ -1,10 +1,73 @@
-//const addBookBtn = document.getElementById("add-book-btn");
 //const booksContainer = document.getElementById("books");
-//const modalContainer = document.getElementById("modal");
 //const form = document.getElementById("book-form");
-const booksContainer = document.querySelector(".main-flex");
+const elements = (() => {
+  const booksContainer = document.querySelector(".main-flex");
 
-//let myLibrary = [];
+  function getBooksContainer() {
+    return booksContainer;
+  }
+
+  return {
+    getBooksContainer,
+  };
+})();
+
+const formElements = (() => {
+  const form = document.querySelector("form");
+  const checkbox = document.querySelector("input[type='checkbox']");
+  const customCheckbox = document.querySelector(".custom-checkbox");
+  const customCheckboxLabel = document.querySelector(
+    ".input-container.checkbox label"
+  );
+  const titleInput = document.getElementById("title");
+  const authorInput = document.getElementById("author");
+  const pagesInput = document.getElementById("pages");
+  const readCheckbox = document.getElementById("read");
+
+  function getForm() {
+    return form;
+  }
+
+  function getCheckbox() {
+    return checkbox;
+  }
+
+  function getCustomCheckbox() {
+    return customCheckbox;
+  }
+
+  function getCustomCheckboxLabel() {
+    return customCheckboxLabel;
+  }
+
+  function getTitleInput() {
+    return titleInput;
+  }
+
+  function getAuthorInput() {
+    return authorInput;
+  }
+
+  function getPagesInput() {
+    return pagesInput;
+  }
+
+  function getReadCheckbox() {
+    return readCheckbox;
+  }
+
+  return {
+    getForm,
+    getCheckbox,
+    getCustomCheckbox,
+    getCustomCheckboxLabel,
+    getTitleInput,
+    getAuthorInput,
+    getPagesInput,
+    getReadCheckbox,
+  };
+})();
+
 let myLibrary = [
   {
     title: "Book 1",
@@ -44,16 +107,9 @@ function Book({ title, author, pages, read }) {
   this.id = generateId();
 }
 
-/* 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-  removeAllChildren(booksContainer);
-  updateBooksDisplay();
-}
- */
-
 function updateBooksDisplay() {
   myLibrary.forEach((book) => {
+    const booksContainer = elements.getBooksContainer();
     const bookContainer = document.createElement("div");
     bookContainer.classList.add("book");
     bookContainer.setAttribute("data-id", book.id);
@@ -95,47 +151,6 @@ function removeAllChildren(node) {
     node.removeChild(node.firstChild);
   }
 }
-/* 
-function toggleForm() {
-  modalContainer.classList.toggle("hide");
-}
- */
-/* 
-function handleFormSubmit() {
-  const inputs = Array.from(form.getElementsByTagName("input"));
-  const obj = {};
-  inputs.forEach((input) => {
-    if (input.type === "checkbox") {
-      obj[input.name] = input.checked;
-    } else {
-      obj[input.name] = input.value;
-    }
-  });
-  const newBook = new Book(obj);
-  addBookToLibrary(newBook);
-}
- */
-/* 
-function resetForm() {
-  const inputs = Array.from(form.getElementsByTagName("input"));
-  inputs.map((input) => {
-    if (input.type === "checkbox") {
-      input.checked = false;
-    } else {
-      input.value = "";
-    }
-  });
-}
- */
-/* 
-addBookBtn.addEventListener("click", toggleForm);
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  handleFormSubmit();
-  resetForm();
-  toggleForm();
-});
- */
 
 function generateId() {
   return crypto.randomUUID();
@@ -196,3 +211,64 @@ const bookElementGenerator = (() => {
 })();
 
 updateBooksDisplay();
+
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+  removeAllChildren(elements.getBooksContainer());
+  updateBooksDisplay();
+}
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+
+  const obj = {
+    title: formElements.getTitleInput().value,
+    author: formElements.getAuthorInput().value,
+    pages: formElements.getPagesInput().value,
+    read: formElements.getCheckbox().checked,
+  };
+
+  const newBook = new Book(obj);
+  addBookToLibrary(newBook);
+  resetForm();
+}
+
+function resetForm() {
+  formElements.getTitleInput().value = "";
+  formElements.getAuthorInput().value = "";
+  formElements.getPagesInput().value = "";
+  checkboxStuff.reset();
+}
+
+formElements.getForm().addEventListener("submit", handleFormSubmit);
+
+const checkboxStuff = (() => {
+  function click(e) {
+    e.preventDefault();
+    const checkbox = formElements.getCheckbox();
+    checkbox.click();
+    updateCustomCheckbox(checkbox.checked);
+  }
+
+  function reset() {
+    const checkbox = formElements.getCheckbox();
+    checkbox.checked = false;
+    updateCustomCheckbox(checkbox.checked);
+  }
+
+  function updateCustomCheckbox(isChecked) {
+    const customCheckbox = formElements.getCustomCheckbox();
+    if (!isChecked) {
+      customCheckbox.classList.remove("checked");
+    } else {
+      customCheckbox.classList.add("checked");
+    }
+  }
+
+  return { click, reset };
+})();
+
+formElements.getCustomCheckbox().addEventListener("click", checkboxStuff.click);
+formElements
+  .getCustomCheckboxLabel()
+  .addEventListener("click", checkboxStuff.click);
